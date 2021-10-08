@@ -62,3 +62,35 @@ max_words=0
 for sent in XT:
     max_words=max(max_words,len(sent.split(' ')))
 print("Max Word in Input string are =",max_words)
+
+# Function To Generate Embedding For Input Strings 
+def getOutputEmbeddings(X):
+    
+    embedding_matrix_output = np.zeros((X.shape[0],10,50))
+    for ix in range(X.shape[0]):
+        X[ix] = X[ix].split()
+        for jx in range(len(X[ix])):
+            embedding_matrix_output[ix][jx] = embeddings[X[ix][jx].lower()]
+            
+    return embedding_matrix_output
+
+emb_XT = getOutputEmbeddings(XT)
+emb_Xt = getOutputEmbeddings(Xt)
+print("Shape of Embeddings of XT",emb_XT.shape)
+print("Shape of Embeddings of Xt",emb_Xt.shape)
+
+print("Train Data Present= ",XT[1])
+print("Embedding For Above Text of XT[1]= ",emb_XT[1])
+
+# Deep Learning Model To Map Input TO Output 
+from keras.layers import LSTM, Dropout, Dense, Activation
+from keras.models import Sequential
+model = Sequential()
+model.add(LSTM(64,input_shape=(10,50),return_sequences=True))
+model.add(Dropout(0.4))
+model.add(LSTM(64,input_shape=(10,50)))
+model.add(Dropout(0.3))
+model.add(Dense(5))
+model.add(Activation('softmax'))
+print(model.summary())
+
