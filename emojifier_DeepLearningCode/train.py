@@ -94,3 +94,15 @@ model.add(Dense(5))
 model.add(Activation('softmax'))
 print(model.summary())
 
+# Compile And Train The Model 
+model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['acc'])
+model.fit(emb_XT,YT,batch_size=32,epochs=40,shuffle=True,validation_split=0.1)
+
+# Evaluate The Model
+print(model.metrics_names)
+# loss value & metrics values
+print(model.evaluate(emb_Xt,Yt))
+
+# Get Prediction Values 
+pred = model.predict(emb_Xt)
+print("Prediction Shape",pred.shape)
