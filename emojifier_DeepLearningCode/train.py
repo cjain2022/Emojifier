@@ -57,3 +57,8 @@ print("Testing embedding shapes")
 print("Size of dictionary:->",len(embeddings))
 print("Length of embedding for one word 'the'is  :->",embeddings['the'].shape)
 
+# Observing Maximum Words in Input String
+max_words=0
+for sent in XT:
+    max_words=max(max_words,len(sent.split(' ')))
+print("Max Word in Input string are =",max_words)
