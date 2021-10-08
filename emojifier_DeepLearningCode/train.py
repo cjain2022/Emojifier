@@ -25,3 +25,35 @@ print(emoji.emojize(":fork_and_knife:"))
 # Print Emojis We Have in Our Dictionary
 for e in emoji_dictionary.values():
     print(emoji.emojize(e))
+
+#  We have 5 Emojis For Prediction, so we will convert output to categorical output of shape ( , 5)
+from tensorflow.keras.utils import to_categorical 
+XT = train[0]
+Xt = test[0]
+
+YT = to_categorical(train[1])
+Yt = to_categorical(test[1])
+
+
+print("Dimension of training data",XT.shape)
+print("Dimension of testing data",Xt.shape)
+print("Dimension of Ytrain after using to_categorical",YT.shape)
+print("Dimension of Ytest after using to_categorical",Yt.shape)
+
+# Loading Glove Vector As Dictionary 
+embeddings = {}
+with open('embedding/glove.6B.50d.txt',encoding='utf-8') as f:
+    for line in f:
+        values = line.split()
+        word = values[0]
+        coeffs = np.asarray(values[1:],dtype='float32')
+        
+        #print(word)
+        #print(coeffs)
+        embeddings[word] = coeffs
+
+# Oberserving Dimension Of Embedding 
+print("Testing embedding shapes")
+print("Size of dictionary:->",len(embeddings))
+print("Length of embedding for one word 'the'is  :->",embeddings['the'].shape)
+
