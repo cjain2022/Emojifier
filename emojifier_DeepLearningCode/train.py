@@ -105,4 +105,20 @@ print(model.evaluate(emb_Xt,Yt))
 
 # Get Prediction Values 
 pred = model.predict(emb_Xt)
+pred = np.argmax(model.predict(emb_XT), axis=-1)
 print("Prediction Shape",pred.shape)
+
+# Oberserve model Performance on Test Data
+for i in range(30):
+    print(' '.join(Xt[i]))
+    print(emoji.emojize(emoji_dictionary[str(np.argmax(Yt[i]))]))
+    print(emoji.emojize(emoji_dictionary[str(pred[i])]))
+
+# Saving the Trained Model and its architecture
+
+# Saving model architecture as JSON 
+with open("trainedModel/model.json", "w") as file:
+    file.write(model.to_json())
+
+# Saving model weights
+model.save_weights("trainedModel/model.h5")
