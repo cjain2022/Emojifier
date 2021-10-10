@@ -104,7 +104,7 @@ print(model.metrics_names)
 print(model.evaluate(emb_Xt,Yt))
 
 # Get Prediction Values 
-pred = model.predict(emb_Xt)
+# pred = model.predict(emb_Xt) will give the output of the model 
 pred = np.argmax(model.predict(emb_XT), axis=-1)
 print("Prediction Shape",pred.shape)
 
