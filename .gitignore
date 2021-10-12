@@ -216,5 +216,5 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/django,python
 
-emojifier_DeepLearningCode/embedding/glove.6B.50d.txt
+emojifier_DeepLearningCode/embedding/glove.6B.50d.txt 
 staticfiles/
