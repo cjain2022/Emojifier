@@ -1,3 +1,1 @@
-web: gunicorn emojifierProject.wsgi 
-
-
+web: gunicorn emojifierProject.wsgi
