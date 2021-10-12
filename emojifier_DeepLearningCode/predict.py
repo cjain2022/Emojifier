@@ -30,7 +30,8 @@ def getOutputEmbeddings(X):
     for ix in range(X.shape[0]):
         X[ix] = X[ix].split()
         for jx in range(len(X[ix])):
-            embedding_matrix_output[ix][jx] = embeddings[X[ix][jx].lower()]
+            if embeddings.get(X[ix][jx].lower()) is not None:
+                embedding_matrix_output[ix][jx] = embeddings[X[ix][jx].lower()]
             
     return embedding_matrix_output
 
