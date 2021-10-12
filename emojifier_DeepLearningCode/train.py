@@ -87,9 +87,9 @@ from keras.layers import LSTM, Dropout, Dense, Activation
 from keras.models import Sequential
 model = Sequential()
 model.add(LSTM(64,input_shape=(10,50),return_sequences=True))
-model.add(Dropout(0.4))
+model.add(Dropout(0.2))
 model.add(LSTM(64,input_shape=(10,50)))
-model.add(Dropout(0.3))
+model.add(Dropout(0.2))
 model.add(Dense(5))
 model.add(Activation('softmax'))
 print(model.summary())
