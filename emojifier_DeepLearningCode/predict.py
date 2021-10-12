@@ -7,6 +7,50 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 DEEP_LEARNING_BASE_DIR = Path(__file__).resolve().parent
+# Code to Download Embeddings 
+from decouple import config
+DOWNLOAD = config('DOWNLOAD',cast=bool, default=False)
+
+import requests
+
+def download_file_from_google_drive(id, destination):
+    URL = "https://docs.google.com/uc?export=download"
+
+    session = requests.Session()
+
+    response = session.get(URL, params = { 'id' : id }, stream = True)
+    token = get_confirm_token(response)
+
+    if token:
+        params = { 'id' : id, 'confirm' : token }
+        response = session.get(URL, params = params, stream = True)
+
+    save_response_content(response, destination)    
+
+def get_confirm_token(response):
+    for key, value in response.cookies.items():
+        if key.startswith('download_warning'):
+            return value
+
+    return None
+
+def save_response_content(response, destination):
+    CHUNK_SIZE = 32768
+
+    with open(destination, "wb") as f:
+        for chunk in response.iter_content(CHUNK_SIZE):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+def execute_download():
+    # emojifier_DeepLearningCode\embedding\glove.6B.50d.txt
+    path_for_emb_file=os.path.join(DEEP_LEARNING_BASE_DIR,'embedding/glove.6B.50d.txt')
+    download_file_from_google_drive('1MTlxFUh2PnT68HKvnUdTa4jpycRFb13O',path_for_emb_file)
+
+if DOWNLOAD:
+    print("ONE TIME DOWNLOAD OF EMBEDDINGS FILE ")
+    execute_download()
+else:
+    print("Download was set to false")
 
 import os 
 print("-- Loading Model File")
