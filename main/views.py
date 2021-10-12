@@ -38,11 +38,15 @@ def execute_download():
     # emojifier_DeepLearningCode\embedding\glove.6B.50d.txt
     download_file_from_google_drive('1MTlxFUh2PnT68HKvnUdTa4jpycRFb13O','emojifier_DeepLearningCode/embedding/glove.6B.50d.txt')
 
-
-def predictEmoji(request):
+from django.http import HttpResponse
+def temp_view(request):
     if DOWNLOAD:
         print("ONE TIME DOWNLOAD OF EMBEDDINGS FILE ")
         execute_download()
+        return HttpResponse("Download success")
+    return HttpResponse("Download was set to false")
+
+def predictEmoji(request):
     if request.method=="GET":
         return render(request,'main/index.html')
     if request.method=="POST":
