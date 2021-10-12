@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block head %}
+<style>
+h1 {
+  font-size: 5.9vw;
+}
+h2 {
+  font-size: 3.0vh;
+}
+p {
+  font-size: 2vmin;
+}
+</style>
+{% endblock %}
+{% block body %}
+<h1 class="center-align"> Predict Emoji </h1>
+<div class="row  purple lighten-4">
+    <form class="col s12" action="{% url 'predictEmoji'%}" method="POST" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s3">
+            </div>
+            <div class="input-field col s6">
+              <input type="text" id="text" name="text" class="validate" required>
+              <label for="text"><span class="black-text">Enter Text</span></label>
+            </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <p class="center-align">
+              <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Predict Emoji  
+                  <i class="material-icons right">send</i>
+              </button>
+            </p>
+              <!-- <button type="submit"> Generate PDF </button> -->
+          </div>
+      </div> 
+      </form>
+      {% if emoji %}
+        <h1 class="center-align"> {{ emoji }} </h1>
+      {% endif %}
+</div>
+{% endblock %}

@@ -2,15 +2,22 @@ from emoji import emojize
 import numpy as np
 import pandas as pd
 from keras.models import model_from_json
+from pathlib import Path
+import os
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+DEEP_LEARNING_BASE_DIR = Path(__file__).resolve().parent
+
+import os 
 print("-- Loading Model File")
-model_json_file = 'trainedModel/model.json'
+model_json_file = os.path.join(DEEP_LEARNING_BASE_DIR,'trainedModel/model.json')
 with open(model_json_file, "r") as file:
     model = model_from_json(file.read())
 
 print("-- Loading Embeddings File")
 embeddings = {}
-with open('embedding/glove.6B.50d.txt',encoding='utf-8') as f:
+glove_path=os.path.join(DEEP_LEARNING_BASE_DIR,'embedding/glove.6B.50d.txt')
+with open(glove_path,encoding='utf-8') as f:
     for line in f:
         values = line.split()
         word = values[0]
@@ -36,13 +43,12 @@ def predict(input_str):
         "4": ":fork_and_knife:",
     }
 
-    X = pd.Series([test_str])
+    X = pd.Series([input_str])
     emb_X = getOutputEmbeddings(X)
     p=np.argmax(model.predict(emb_X), axis=-1)
 
-
-    return emoji_dictionary[str(p[0])]
-
+    return emojize(emoji_dictionary[str(p[0])])
+    
 if __name__ == "__main__":
     test_str = "i love it"
     output = predict(test_str)
